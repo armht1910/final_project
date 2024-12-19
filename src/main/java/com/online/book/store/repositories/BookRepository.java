@@ -8,6 +8,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface BookRepository extends CrudRepository<BookRegistration, String> {
+    static List<BookRegistration> findByIsHomePage(boolean b) {
+        return null;}
+
     List<BookRegistration> findAll();
     Page<BookRegistration> findAll(Pageable pageable);
 

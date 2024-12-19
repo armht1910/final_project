@@ -12,6 +12,9 @@ public class BookRegistration {
 	String Reviews;
 	String rate;
 	String price;
+	String imagePath;
+	String imageName;
+	boolean isHomePage;
 	public String getPrice() {
 		return price;
 	}
@@ -41,5 +44,23 @@ public class BookRegistration {
 	}
 	public void setRate(String rate) {
 		this.rate = rate;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	public boolean isHomePage() {
+		return isHomePage;
+	}
+	public void setHomePage(boolean homePage) {
+		isHomePage = homePage;
 	}
 }
