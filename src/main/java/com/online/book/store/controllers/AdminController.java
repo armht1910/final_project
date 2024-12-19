@@ -71,46 +71,48 @@ public class AdminController {
         return mv;
     }
 
-    private String absolutePath = "C:\\Users\\armht\\Downloads\\алгоритмы курсера\\Online-Book-Store\\src\\main\\resources\\static\\images";
+    private String absolutePath = "C:\\Users\\armht\\Downloads\\алгоритмы курсера\\Online-Book-Store\\src\\main\\resources\\static\\images\\";
 
     @PostMapping("/book_Add")
-    public ModelAndView addBook(@RequestParam("Book_title") String Book_title,
-                                @RequestParam("Author") String author,
-                                @RequestParam("Reviews") String reviews,
-                                @RequestParam("Price") String price,
+    public ModelAndView addBook(@ModelAttribute BookRegistration breg,
+                                @RequestParam("Book_title") String title,
                                 @RequestParam("bookImage") MultipartFile file) {
         ModelAndView mv = new ModelAndView("Book_Management");
 
-        Optional<BookRegistration> book1 = bookRepository.findById(Book_title);
-        if (book1.isPresent()) {
-            mv.addObject("PrintSwal", "Book_Exist");
-        } else {
-            BookRegistration book = new BookRegistration();
-            book.setBook_title(Book_title);
-            book.setAuthor(author);
-            book.setReviews(reviews);
-            book.setPrice(price);
+        if (!file.isEmpty()) {
+            try {
+                // Генерация полного пути к файлу
+                String fileName = file.getOriginalFilename();
+                String uploadDir = absolutePath;
+                File saveFile = new File(uploadDir + fileName);
 
-            // Обработка загруженного файла
-            if (!file.isEmpty()) {
-                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-                String deston = absolutePath + "/" + fileName;
-                File dest = new File(deston);
-                try {
-                    file.transferTo(dest);
-                    book.setImagePath(deston);
-                    book.setImageName(fileName);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    mv.addObject("PrintSwal", "File_Error");
+                // Создание директории, если её нет
+                if (!saveFile.getParentFile().exists()) {
+                    saveFile.getParentFile().mkdirs();
                 }
-            }
 
-            bookRepository.save(book);
-            mv.addObject("PrintSwal", "Add_Sucess");
+                // Сохранение файла
+                file.transferTo(saveFile);
+
+                // Установка относительного пути изображения
+                breg.setImagePath("/images/" + fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                mv.addObject("PrintSwal", "Upload_Failed");
+                return mv;
+            }
+        } else {
+            mv.addObject("PrintSwal", "No_File");
+            return mv;
         }
+
+        // Сохранение книги в базе данных
+        bookRepository.save(breg);
+        mv.addObject("PrintSwal", "Add_Success");
         return mv;
     }
+
+
 
 
     @RequestMapping("/book_Delete")
@@ -234,4 +236,3 @@ public class AdminController {
         mailSender.send(message);
     }
 }
-

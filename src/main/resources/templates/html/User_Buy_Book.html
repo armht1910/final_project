@@ -149,8 +149,8 @@
       <!-- Подтверждение заказа -->
       <h2>Confirm Book Order</h2>
       <form action="/user_Save_Buy_Book" method="post">
-         <input type="text" class="form-control" name="Book_name" th:value="${Bname}" placeholder="Book title" readonly>
-         <input type="text" class="form-control" name="Price" th:value="${Bprice}" placeholder="Price" readonly>
+         <input type="hidden" class="form-control" name="Book_name" th:value="${Bname}">
+         <input type="hidden" class="form-control" name="Price" th:value="${Bprice}">
          <button type="submit">Buy</button>
       </form>
    </div>
