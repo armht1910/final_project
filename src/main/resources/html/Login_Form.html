@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    html, body {
+      display: grid;
+      height: 100vh;
+      width: 100%;
+      place-items: center;
+      background-color: #f2f2f2;
+    }
+    .container {
+      background: #fff;
+      max-width: 350px;
+      width: 100%;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .container .title {
+      font-size: 24px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .input-box {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .input-box input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .input-box input:focus {
+      border-color: #666;
+    }
+    .button input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #666;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button input:hover {
+      background-color: #444;
+    }
+    .container .signup-link {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
+    .container .signup-link a {
+      text-decoration: none;
+      color: #666;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .container .signup-link a:hover {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <form action="/VerifyLogin" id="form1" method="post">
+    <div class="title">Login</div>
+    <div class="input-box">
+      <input type="text" name="email" id="email" th:value="${User_Name}" placeholder="Enter Your Email" required>
+    </div>
+    <div class="input-box">
+      <input type="password" name="password" th:value="${Pass}" id="password" placeholder="Enter Your Password" required>
+    </div>
+    <div class="button">
+      <input type="button" value="Login" onclick="Verify()">
+    </div>
+  </form>
+  <div class="signup-link">
+    <span>New User? <a href="/User">Signup</a></span>
+  </div>
+</div>
+
+<div th:if="${PrintSwal == 'User'}">
+  <script>swal("User Login Successfully");</script>
+</div>
+
+<div th:if="${PrintSwal == 'Failed'}">
+  <script>swal("Sorry, incorrect email or password");</script>
+</div>
+
+<div th:if="${PrintSwal == 'Reg_Sucess'}">
+  <script>swal("Registration Successful");</script>
+</div>
+
+<script>
+  function Verify() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    if (email === "" || password === "") {
+      swal("Please fill out all fields.");
+      return false;
+    } else {
+      var form = document.getElementById("form1");
+      form.submit();
+      form.reset();
+    }
+  }
+</script>
+</body>
+</html>
