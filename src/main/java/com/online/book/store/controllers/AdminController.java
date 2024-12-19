@@ -71,7 +71,7 @@ public class AdminController {
         return mv;
     }
 
-    private String absolutePath = "C:\\Users\\armht\\Downloads\\Новая папка\\Online-Book-Store1-master\\Online-Book-Store1-master\\src\\main\\resources\\static\\images";
+    private String absolutePath = "C:\\Users\\armht\\Downloads\\алгоритмы курсера\\Online-Book-Store\\src\\main\\resources\\static\\images";
 
     @PostMapping("/book_Add")
     public ModelAndView addBook(@RequestParam("Book_title") String Book_title,
