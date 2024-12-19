@@ -9,5 +9,4 @@ public interface OrderRepository extends CrudRepository<OrderRegistration, Integ
     List<OrderRegistration> findAll();
 
     List<OrderRegistration> findByBusername(String busername);
-//fafsF
 }
